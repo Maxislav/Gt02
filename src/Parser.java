@@ -53,14 +53,15 @@ public class Parser {
     }
 
     public void next(String data) {
-        List list = this.setList(data);
+        first(data);
+       /* List list = this.setList(data);
 
 
 
         while(!list.isEmpty()) {
             //System.out.println("list data: "+(String)list.remove(0));
             this.params((String)list.remove(0));
-        }
+        }*/
 
     }
 
