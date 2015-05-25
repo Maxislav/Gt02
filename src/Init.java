@@ -1,13 +1,15 @@
 
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.sql.SQLException;
-//import main.Bd;
-//import main.Server;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.sql.SQLException;
+
+//import main.Bd;
+//import main.Server;
 
 public class Init {
     public Init() {
@@ -35,6 +37,6 @@ public class Init {
         System.out.println("Version 28.05.15. Pareser Gt02");
         Bd bd1 = new Bd(root, pass, url, table);
         bd1.connect();
-        new Server(10003, bd1);
+        new Server(3128, bd1);
     }
 }
