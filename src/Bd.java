@@ -93,7 +93,7 @@ public class Bd {
         }
 
         //   System.out.println("1111111");
-        String query = "SELECT * FROM log WHERE imei = \'" + imei + "\' AND lat != \'null\' ORDER BY datetime DESC LIMIT 1";
+        String query = "SELECT * FROM log WHERE imei = \'" + imei + "\' AND lat != \'null\' AND params != \'0\' ORDER BY datetime DESC LIMIT 1";
         ResultSet resultSet;
         try {
             stmt.executeQuery(query);
@@ -102,6 +102,8 @@ public class Bd {
                 // System.out.println(resultSet.getString("lat"));
                 map.put("lat", resultSet.getString("lat"));
                 map.put("lng", resultSet.getString("lng"));
+                map.put("azimuth", resultSet.getString("azimuth"));
+                map.put("speed", resultSet.getString("speed"));
             }
         } catch (SQLException var5) {
             var5.printStackTrace();
@@ -111,7 +113,7 @@ public class Bd {
 //{211634,V,,,,,0.7,138,220315,3,00,F9,67,1,,,,,,,D5,,,,M,3,,}
 
         if(map.size()==0){
-            query = "SELECT * FROM loghistory WHERE imei = \'" + imei + "\' AND lat != \'null\' ORDER BY datetime DESC LIMIT 1";
+            query = "SELECT * FROM loghistory WHERE imei = \'" + imei + "\' AND lat != \'null\'  AND params != '0' ORDER BY datetime DESC LIMIT 1";
             try {
                 stmt.executeQuery(query);
                 resultSet = stmt.executeQuery(query);

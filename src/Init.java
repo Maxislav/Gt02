@@ -34,7 +34,7 @@ public class Init {
         }
             System.out.println(url);
 
-        System.out.println("Version 25.05.15. Pareser Gt02");
+        System.out.println("Version 26.05.15. Model Gt02");
         Bd bd1 = new Bd(root, pass, url, table);
         bd1.connect();
         new Server(10003, bd1);

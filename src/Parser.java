@@ -28,6 +28,11 @@ public class Parser {
             (027043161231BR00150518A5024.9438N03031.1601E000.4 063935 250.9600000000L00000000)
             (027043161231BR00150518A5024.9425N03031.1574E000.3 064005 216.7900000000L00000000)
             (027043161231BR 00 15 05 18 A 5024.9451 N 03031.1573 E001.0 064035 34.21000000000L00000000)
+
+            (027043161231BP00000027043161231HSO)
+
+            (027043161231BR00150526A5025.4253N03038.0900E001.9084521214.9700000000L00000000)
+
 */
 
     public Parser(Bd bd) {
@@ -39,8 +44,14 @@ public class Parser {
         List list = this.setList(data);
         String sourcedata = (String)list.get(0);
         String[] arr =  explode(sourcedata);
-//(027043161231BR00150518A5024.9451N03031.1573E001.006403534.21000000000L00000000)
         this.imei = getParam(arr, 0, 12);
+    }
+
+    public void next(String data) {
+        this.data = data;
+        List list = this.setList(data);
+        String sourcedata = (String)list.get(0);
+        String[] arr =  explode(sourcedata);
         HashMap map = new HashMap();
         map.put("time", getParam(arr,49,55 ));
         map.put("lat", getParam(arr,23,32));
@@ -49,20 +60,8 @@ public class Parser {
         map.put("date", getParam(arr,16,22));
         map.put("azimuth", getParam(arr,55,60));
         map.put("sourcedata", sourcedata);
+        map.put("params", "1");
         convert(map);
-    }
-
-    public void next(String data) {
-        first(data);
-       /* List list = this.setList(data);
-
-
-
-        while(!list.isEmpty()) {
-            //System.out.println("list data: "+(String)list.remove(0));
-            this.params((String)list.remove(0));
-        }*/
-
     }
 
     private void params(String row) {
@@ -176,6 +175,7 @@ public class Parser {
         map1.put("sourcedata", map.get("sourcedata"));
         map1.put("sputnik", "n/a");
         map1.put("zaryad", "n/a");
+        map1.put("params", map.get("params"));
 
         saveToDb(map1);
         for (HashMap.Entry<String, String> entry : map1.entrySet()) {
@@ -208,7 +208,7 @@ public class Parser {
     }
 
     private void saveToDb(Map<String, String> map) {
-        String _line = "INSERT INTO `log`(imei, lat, lng, datetime, speed, sputnik, azimuth,sourcedata, zaryad) VALUES(\'" + this.imei + "\'" + ",\'" + map.get("lat") + "\'" + ",\'" + map.get("lng") + "\'" + ",\'" + map.get("dateTime") + "\'" + ",\'" + map.get("speed") + "\'" + ",\'" + map.get("sputnik") + "\'" + ",\'" + (String)map.get("azimuth") + "\'" + ",\'" + (String)map.get("sourcedata") + "\'" + ",\'" + (String)map.get("zaryad") + "\'" + ")";
+        String _line = "INSERT INTO `log`(imei, lat, lng, datetime, speed, sputnik, azimuth, sourcedata, zaryad, params) VALUES(\'" + this.imei + "\'" + ",\'" + map.get("lat") + "\'" + ",\'" + map.get("lng") + "\'" + ",\'" + map.get("dateTime") + "\'" + ",\'" + map.get("speed") + "\'" + ",\'" + map.get("sputnik") + "\'" + ",\'" + (String)map.get("azimuth") + "\'" + ",\'" + (String)map.get("sourcedata") + "\'" + ",\'" + (String)map.get("zaryad") + "\'" + ",\'" + map.get("params") + "\'" +   ")";
 
         try {
             this.bd.save(_line);
