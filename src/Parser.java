@@ -152,7 +152,7 @@ public class Parser {
 
     private String speedKmh(String s) {
         double d = Double.valueOf(s.trim()).doubleValue();
-        d *= 1.825D;
+        d *= 1.0D;
         s = Double.toString(d);
         return s;
     }
